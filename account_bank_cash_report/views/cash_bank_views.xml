@@ -56,6 +56,6 @@
     </record>
 
     <menuitem id="menu_action_cash_bank_report" name="Banco y efectivo"
-              action="ir_account_bank_cash_report" parent="account_group_flow_report_menu"/>
+              action="ir_account_bank_cash_report" parent="account_grupo_flujo_report.account_group_flow_report_menu"/>
 
 </odoo>
