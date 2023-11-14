@@ -8,5 +8,7 @@
     'depends': ['account', 'account_payment_flow', 'base_accounting_kit'],
     'data': [
         'views/account_flow_group_views.xml',
+        'views/cash_bank_views.xml',
+        'views/account_account_type_views.xml',
     ],
 }
