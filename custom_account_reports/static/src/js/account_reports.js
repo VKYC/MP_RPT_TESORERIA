@@ -659,6 +659,11 @@ odoo.define('custom_account_reports.account_report', function (require) {
                 }
                 self.reload();
             });
+            this.$searchview_buttons.find('#account_filter').change(function (event) {
+                var option_value = $(this).val();
+                self.report_options.account_filter = option_value;
+                self.reload();
+            });
             $('.js_account_report_group_choice_filter', this.$searchview_buttons).click(function () {
                 var option_value = $(this).data('filter');
                 var option_member_ids = $(this).data('member-ids') || [];

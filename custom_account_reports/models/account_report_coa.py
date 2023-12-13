@@ -64,6 +64,7 @@ class AccountChartOfAccountReport(models.AbstractModel):
     def _get_lines(self, options, line_id=None):
         # Create new options with 'unfold_all' to compute the initial balances.
         # Then, the '_do_query' will compute all sums/unaffected earnings/initial balances for all comparisons.
+        display_account = options.get('account_filter', 'all')
         new_options = options.copy()
         new_options['unfold_all'] = True
 
@@ -87,32 +88,12 @@ class AccountChartOfAccountReport(models.AbstractModel):
         # Add lines, one per account.account record.
         for account, periods_results in accounts_results:
             sums = []
-            for i, period_values in enumerate(reversed(periods_results[:1])):
-                account_sum = period_values.get('sum', {})
-                account_un_earn = period_values.get('unaffected_earnings', {})
-                account_init_bal = period_values.get('initial_balance', {})
-
-                # if i == 0:
-                #     # Append the initial balances.
-                #     initial_balance = account_init_bal.get('balance', 0.0) + account_un_earn.get('balance', 0.0)
-                #     sums += [
-                #         initial_balance > 0 and initial_balance or 0.0,
-                #         initial_balance < 0 and -initial_balance or 0.0,
-                #     ]
-
-                # if i == len(periods_results) - 1:
-                #     # Append the end balances.
-                #     end_balance = account_sum.get('balance', 0.0) + account_un_earn.get('balance', 0.0)
-                #     sums += [
-                #         end_balance > 0 and end_balance or 0.0,
-                #         end_balance < 0 and -end_balance or 0.0,
-                #     ]
-                # else:
-                #     # Append the debit/credit columns.
-                #     sums += [
-                #         account_sum.get('debit', 0.0) - account_init_bal.get('debit', 0.0),
-                #         account_sum.get('credit', 0.0) - account_init_bal.get('credit', 0.0),
-                #     ]
+            currency = account.currency_id and account.currency_id or account.company_id.currency_id
+            period_values = periods_results[-1]
+            account_sum = period_values.get('sum', {})
+            def get_account(account=account, account_sum=account_sum, sums=sums, lines=lines):
+                # for i, period_values in enumerate(reversed(periods_results[:1])):
+                
                 debito = account_sum.get('debit', 0.0)
                 credito = account_sum.get('credit', 0.0)
                 deudor = account_sum.get('balance', 0.0) if account_sum.get('balance', 0.0) > 0 else 0
@@ -132,26 +113,32 @@ class AccountChartOfAccountReport(models.AbstractModel):
                     ganancia
                 ]
 
-            columns = []
-            for i, value in enumerate(sums):
-                # Update totals.
-                totals[i] += value
+                columns = []
+                for i, value in enumerate(sums):
+                    # Update totals.
+                    totals[i] += value
 
-                # Create columns.
-                columns.append({'name': self.format_value(value, blank_if_zero=True), 'class': 'number', 'no_format_name': value})
+                    # Create columns.
+                    columns.append({'name': self.format_value(value, blank_if_zero=True), 'class': 'number', 'no_format_name': value})
 
-            name = account.name_get()[0][1]
+                name = account.name_get()[0][1]
 
-            lines.append({
-                'id': self._get_generic_line_id('account.account', account.id),
-                'name': name,
-                'code': account.code,
-                'title_hover': name,
-                'columns': columns,
-                'unfoldable': False,
-                'caret_options': 'account.account',
-                'class': 'o_account_searchable_line o_account_coa_column_contrast',
-            })
+                lines.append({
+                    'id': self._get_generic_line_id('account.account', account.id),
+                    'name': name,
+                    'code': account.code,
+                    'title_hover': name,
+                    'columns': columns,
+                    'unfoldable': False,
+                    'caret_options': 'account.account',
+                    'class': 'o_account_searchable_line o_account_coa_column_contrast',
+                })
+            if display_account == 'all':
+                get_account(account, account_sum, sums, lines)
+            if display_account == 'not_zero' and not currency.is_zero(account_sum.get('balance', 0.0)):
+                get_account(account, account_sum, sums, lines)
+            if display_account == 'movement' and (not currency.is_zero(account_sum.get('debit', 0.0)) or not currency.is_zero(account_sum.get('credit', 0.0))):
+                get_account(account, account_sum, sums, lines)
 
         # Total report line.
         lines.append({

@@ -60,6 +60,7 @@ class AccountReport(models.AbstractModel):
     filter_journals = None
     filter_analytic = None
     filter_unfold_all = None
+    filter_account_filter = None
     filter_hierarchy = None
     filter_partner = None
     filter_fiscal_position = None
@@ -816,7 +817,18 @@ class AccountReport(models.AbstractModel):
                 options['multi_company'] = [
                     {'id': c.id, 'name': c.name} for c in companies
                 ]
+    ####################################################
+    # OPTIONS: ACCOUNT
+    ####################################################
 
+    def _init_filter_account_filter(self, options, previous_options=None):
+        # if self.filter_account_filter:
+        if previous_options.get('account_filter') is not None:
+            options['account_filter'] = previous_options['account_filter']
+        else:
+            options['account_filter'] = 'all'
+        return options
+    
     ####################################################
     # OPTIONS: CORE
     ####################################################
@@ -1406,7 +1418,7 @@ class AccountReport(models.AbstractModel):
                 'footnotes': [{'id': f.id, 'line': f.line, 'text': f.text} for f in report_manager.footnotes_ids],
                 'buttons': self._get_reports_buttons_in_sequence(options),
                 'main_html': self.get_html(options),
-                'searchview_html': self.env['ir.ui.view']._render_template(self._get_templates().get('search_template', 'account_report.search_template'), values=searchview_dict),
+                'searchview_html': self.env['ir.ui.view']._render_template(self._get_templates().get('search_template', 'custom_account_report.search_template'), values=searchview_dict),
                 }
         return info
 
