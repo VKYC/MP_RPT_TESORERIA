@@ -823,7 +823,7 @@ class AccountReport(models.AbstractModel):
 
     def _init_filter_account_filter(self, options, previous_options=None):
         # if self.filter_account_filter:
-        if previous_options.get('account_filter') is not None:
+        if previous_options and previous_options.get('account_filter') is not None:
             options['account_filter'] = previous_options['account_filter']
         else:
             options['account_filter'] = 'all'
