@@ -139,13 +139,42 @@ class AccountChartOfAccountReport(models.AbstractModel):
                 get_account(account, account_sum, sums, lines)
             if display_account == 'movement' and (not currency.is_zero(account_sum.get('debit', 0.0)) or not currency.is_zero(account_sum.get('credit', 0.0))):
                 get_account(account, account_sum, sums, lines)
-
+        totals1 = [0] * 8
+        totals2 = [0] * 8
+        a = totals[4] - totals[5]
+        b = totals[6] - totals[7]
+        if a < 0:
+            totals1[4] = a*-1
+        else:
+            totals1[5] = a
+        
+        if b < 0:
+            totals1[6] = b*-1
+        else:
+            totals1[7] = b
+        
+        totals2 = [totals[0], totals[1], totals[2], totals[3], totals[4] + totals1[4], totals[5] + totals1[5], totals[6] + totals1[6], totals[7] + totals1[7]]
+            
         # Total report line.
         lines.append({
              'id': self._get_generic_line_id(None, None, markup='grouped_accounts_total'),
-             'name': _('Total'),
+             'name': _('Total Acumulado'),
              'class': 'total o_account_coa_column_contrast',
              'columns': [{'name': self.format_value(total), 'class': 'number'} for total in totals],
+             'level': 1,
+        })
+        lines.append({
+             'id': self._get_generic_line_id(None, None, markup='grouped_accounts_total'),
+             'name': _('Resultado del Ejercicio'),
+             'class': 'total o_account_coa_column_contrast',
+             'columns': [{'name': self.format_value(total), 'class': 'number'} for total in totals1],
+             'level': 1,
+        })
+        lines.append({
+             'id': self._get_generic_line_id(None, None, markup='grouped_accounts_total'),
+             'name': _('Sumas iguales'),
+             'class': 'total o_account_coa_column_contrast',
+             'columns': [{'name': self.format_value(total), 'class': 'number'} for total in totals2],
              'level': 1,
         })
 
