@@ -5,20 +5,18 @@
         <field name="model">account.payment</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="date" readonly="1"/>
                 <field name="name"/>
                 <field name="partner_id"/>
-                <field name="date" readonly="1"/>
                 <field name="ref"/>
-                <field name="amount"/>
-                <field name="currency_id"/>
-                <field name="partner_bank_id"/>
-                <field name="mp_flujo_id"/>
                 <field name="mp_grupo_flujo_id"/>
+                <field name="mp_flujo_id"/>
+                <field name="partner_bank_id"/>
+                <field name="currency_id"/>
+                <field name="amount"/>
             </tree>
         </field>
     </record>
-
-
     <record id="add_cus_view_account_payment_search" model="ir.ui.view">
         <field name="name">add.account.account.payment.search</field>
         <field name="model">account.payment</field>
@@ -28,13 +26,12 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <separator/>
-                    <filter name="active_grupo" string="Grupo Flujo" context="{'group_by':'mp_grupo_flujo_id'}"/>
+                <filter name="active_grupo" string="Grupo Flujo" context="{'group_by':'mp_grupo_flujo_id'}"/>
                 <separator/>
-                    <filter name="active_flujo" string="Flujo" context="{'group_by':'mp_flujo_id'}"/>
+                <filter name="active_flujo" string="Flujo" context="{'group_by':'mp_flujo_id'}"/>
             </xpath>
         </field>
     </record>
-
     <record model="ir.actions.act_window" id="ir_account_group_flow_report">
         <field name="name">Reporte de pagos por grupo de flujo</field>
         <field name="context">{"search_default_active_grupo":1, "search_default_active_flujo":True}</field>
@@ -42,11 +39,6 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_account_payment_tree"/>
     </record>
-
-    <menuitem id="account_group_flow_report_menu" name="Tesoreria" parent="account.menu_finance_entries"
-              sequence="3"/>
-
-    <menuitem id="menu_action_account_group_flow_report" name="Grupo Flujo pagos report"
-              action="ir_account_group_flow_report" parent="account_group_flow_report_menu"/>
-
+    <menuitem id="account_group_flow_report_menu" name="Tesoreria" parent="account.menu_finance_entries" sequence="3"/>
+    <menuitem id="menu_action_account_group_flow_report" name="Grupo Flujo pagos report" action="ir_account_group_flow_report" parent="account_group_flow_report_menu"/>
 </odoo>
