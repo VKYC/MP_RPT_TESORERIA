@@ -1629,7 +1629,7 @@ class AccountReport(models.AbstractModel):
 
     def print_pdf(self, options):
         return {
-                'type': 'ir_actions_account_report_download',
+                'type': 'ir_actions_custom_account_report_download',
                 'data': {'model': self.env.context.get('model'),
                          'options': json.dumps(options),
                          'output_format': 'pdf',
@@ -1690,7 +1690,7 @@ class AccountReport(models.AbstractModel):
 
     def print_xlsx(self, options):
         return {
-                'type': 'ir_actions_account_report_download',
+                'type': 'ir_actions_custom_account_report_download',
                 'data': {'model': self.env.context.get('model'),
                          'options': json.dumps(options),
                          'output_format': 'xlsx',
@@ -1808,7 +1808,7 @@ class AccountReport(models.AbstractModel):
 
     def print_xml(self, options):
         return {
-                'type': 'ir_actions_account_report_download',
+                'type': 'ir_actions_custom_account_report_download',
                 'data': {'model': self.env.context.get('model'),
                          'options': json.dumps(options),
                          'output_format': 'xml',
@@ -1822,7 +1822,7 @@ class AccountReport(models.AbstractModel):
 
     def print_txt(self, options):
         return {
-                'type': 'ir_actions_account_report_download',
+                'type': 'ir_actions_custom_account_report_download',
                 'data': {'model': self.env.context.get('model'),
                          'options': json.dumps(options),
                          'output_format': 'txt',
