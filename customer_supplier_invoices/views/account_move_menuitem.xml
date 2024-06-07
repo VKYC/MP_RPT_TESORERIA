@@ -8,4 +8,11 @@
               sequence="3"
     />
 
+    <menuitem id="menu_account_moves_partner_invoice"
+              action="action_supplier_invoice"
+              parent="account.menu_finance_entries_accounting_ledgers"
+              groups="account.group_account_readonly"
+              sequence="4"
+    />
+
 </odoo>

@@ -1,57 +1,98 @@
 <odoo>
 
+    <!-- Cambio de nombre al menu padre -->
     <record model="ir.ui.menu" id="account.menu_finance_entries_accounting_ledgers">
         <field name="name">Libros Contables</field>
     </record>
 
-    <record id="view_tree_account_view" model="ir.ui.view">
+    <!-- Vista search de ventas y compras general -->
+    <record id="view_search_filter_accounts_sales_suppliers_invoices" model="ir.ui.view">
         <field name="model">account.move</field>
         <field name="arch" type="xml">
-            <search string="Empresa">
+            <search string="Titulares">
                 <group expand="0" string="Group By">
+                    <filter string="Titular" name="partner_id"
+                            context="{'group_by': 'partner_id'}"/>
                     <filter string="Tipo Documento" name="l10n_latam_document_type_id"
                             context="{'group_by': 'l10n_latam_document_type_id'}"/>
-                    <filter string="Order Date" name="invoice_date" domain="[]"
+                    <filter string="Fecha" name="invoice_date" domain="[]"
                             context="{'group_by': 'invoice_date'}"/>
-                    <filter string="Empresa" name="partner_id"
-                            context="{'group_by': 'partner_id'}"/>
                 </group>
             </search>
             </field>
         </record>
 
-    <record id="view_account_move_partner_invoice_tree" model="ir.ui.view">
-        <field name="name">account.move.partner.accounts.tree</field>
+    <!-- Vista lista de ventas -->
+    <record id="view_account_move_sale_invoice_tree" model="ir.ui.view">
+        <field name="name">view.account.move.sale.invoice.tree</field>
         <field name="model">account.move</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="active" invisible="True"/>
-                <field name="partner_type" string="Tipo" invisible="True"/>
-                <field name="l10n_latam_document_type_id" readonly="True"
-                       string="Tipo de Documento" domain="[('active', '=', True)]"/>
-                <field name="l10n_latam_document_number" readonly="True" string="Número"/>
-                <field name="invoice_date" readonly="True" string="Fecha"/>
-                <field name="display_name" string="Titulares"/>
+<!--                <field name="type" string="Tipo Partner" domain="[('type', '=', 'contacto')]"/>-->
+                <field name="date" string="Fecha Documento" readonly="True"/>
+                <field name="invoice_date" string="Fecha Contab" readonly="True"/>
+                <field name="l10n_latam_document_type_id" string="Tipo de Factura Recibída" readonly="True"
+                       domain="[('active', '=', True)]"/>
+                <field name="l10n_latam_document_number" string="Nro Factura" readonly="True"/>
                 <field name="vat" string="R.U.T"/>
+                <field name="display_name" string="Razón Social"/>
+                <field name="amount_untaxed" string="Neto"/>
                 <field name="amount_tax" string="I.V.A."/>
                 <field name="amount_residual" string="Total"/>
             </tree>
         </field>
     </record>
 
+    <!--Vista lista de compras-->
+    <record id="view_account_move_supplier_invoice_tree" model="ir.ui.view">
+        <field name="name">view.account.move.supplier.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="active" invisible="True"/>
+<!--                <field name="type" string="Tipo Partner" domain="[('type', '=', 'dte')]"/>-->
+                <field name="date" string="Fecha Documento" readonly="True"/>
+                <field name="invoice_date" string="Fecha Contab" readonly="True"/>
+                <field name="l10n_latam_document_type_id" string="Tipo de Factura Recibída" readonly="True"
+                       domain="[('active', '=', True)]"/>
+                <field name="l10n_latam_document_number" string="Nro Factura" readonly="True"/>
+                <field name="vat" string="R.U.T"/>
+                <field name="display_name" string="Razón Social"/>
+                <field name="amount_untaxed" string="Neto"/>
+                <field name="amount_tax" string="I.V.A."/>
+                <field name="amount_residual" string="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Action para abrir las vista de ventas-->
     <record id="action_sale_invoice" model="ir.actions.act_window">
-        <field name="name">Libro de Compra / Venta</field>
+        <field name="name">Libro de Ventas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.move</field>
         <field name="view_mode">tree</field>
-        <field name="search_view_id" ref="view_tree_account_view"/>
-        <field name="view_id" ref="view_account_move_partner_invoice_tree"/>
+        <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
+        <field name="view_id" ref="view_account_move_sale_invoice_tree"/>
         <field name="context">{'search_default_l10n_latam_document_type_id': 1,
             'search_default_invoice_date': 1, 'search_default_partner_id': 1}</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Sin datos registrados!
-            </p>
+            <p class="o_view_nocontent_smiling_face">¡Sin ventas registradas!</p>
+        </field>
+    </record>
+
+    <!-- Action para abrir las vista de compras -->
+    <record id="action_supplier_invoice" model="ir.actions.act_window">
+        <field name="name">Libro de Compras</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
+        <field name="view_id" ref="view_account_move_supplier_invoice_tree"/>
+        <field name="context">{'search_default_l10n_latam_document_type_id': 1,
+            'search_default_invoice_date': 1, 'search_default_partner_id': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Sin datos registrados!</p>
         </field>
     </record>
 
