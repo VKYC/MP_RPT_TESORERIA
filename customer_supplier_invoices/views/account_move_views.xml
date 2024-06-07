@@ -61,9 +61,9 @@
                 <field name="l10n_latam_document_number" string="Nro Factura" readonly="True"/>
                 <field name="vat" string="R.U.T"/>
                 <field name="display_name" string="Razón Social"/>
-                <field name="amount_untaxed" string="Neto"/>
-                <field name="amount_tax" string="I.V.A."/>
-                <field name="amount_residual" string="Total"/>
+                <field name="amount_untaxed" string="Neto" sum="Neto"/>
+                <field name="amount_tax" string="I.V.A." sum="I.V.A"/>
+                <field name="amount_residual" string="Total" sum="Total"/>
             </tree>
         </field>
     </record>
