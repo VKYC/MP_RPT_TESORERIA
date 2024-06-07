@@ -4,7 +4,7 @@
     'summary': """ Customer / Supplier Invoices View""",
     'author': 'Baruc Álvarez',
     'category': 'Accounting/Accounting',
-    'depends': ['account', 'l10n_latam_invoice_document'],
+    'depends': ['account', 'l10n_latam_invoice_document', 'account_move_reconcile'],
     "data": [
         "views/account_move_views.xml",
         "views/account_move_menuitem.xml",

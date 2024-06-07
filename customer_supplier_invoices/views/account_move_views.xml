@@ -52,6 +52,7 @@
             <tree>
                 <field name="active" invisible="True"/>
 <!--                <field name="type" string="Tipo Partner" domain="[('type', '=', 'dte')]"/>-->
+                <field name="facturas_conciliacion_id" readonly="True" domain="[('id','!=', False)]"/>
                 <field name="date" string="Fecha Documento" readonly="True"/>
                 <field name="invoice_date" string="Fecha Contab" readonly="True"/>
                 <field name="l10n_latam_document_type_id" string="Tipo de Factura Recibída" readonly="True"
@@ -74,8 +75,7 @@
         <field name="view_mode">tree</field>
         <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
         <field name="view_id" ref="view_account_move_sale_invoice_tree"/>
-        <field name="context">{'search_default_l10n_latam_document_type_id': 1,
-            'search_default_invoice_date': 1, 'search_default_partner_id': 1}</field>
+        <field name="context">{'search_default_l10n_latam_document_type_id': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">¡Sin ventas registradas!</p>
         </field>
@@ -89,8 +89,7 @@
         <field name="view_mode">tree</field>
         <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
         <field name="view_id" ref="view_account_move_supplier_invoice_tree"/>
-        <field name="context">{'search_default_l10n_latam_document_type_id': 1,
-            'search_default_invoice_date': 1, 'search_default_partner_id': 1}</field>
+        <field name="context">{'search_default_l10n_latam_document_type_id': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Sin datos registrados!</p>
         </field>
