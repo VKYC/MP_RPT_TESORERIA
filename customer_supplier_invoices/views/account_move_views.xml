@@ -30,6 +30,7 @@
             <tree>
                 <field name="active" invisible="True"/>
 <!--                <field name="type" string="Tipo Partner" domain="[('type', '=', 'contacto')]"/>-->
+                <field name="facturas_conciliacion_id" readonly="True" domain="[('id','!=', False)]"/>
                 <field name="date" string="Fecha Documento" readonly="True"/>
                 <field name="invoice_date" string="Fecha Contab" readonly="True"/>
                 <field name="l10n_latam_document_type_id" string="Tipo de Factura Recibída" readonly="True"
