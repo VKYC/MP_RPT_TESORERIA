@@ -17,6 +17,9 @@
                             context="{'group_by': 'l10n_latam_document_type_id'}"/>
                     <filter string="Fecha" name="invoice_date" domain="[]"
                             context="{'group_by': 'invoice_date'}"/>
+                    <filter name="actual_month" string="Month" domain="[
+                            ('actual_month', '&gt;=', (context_today()).strftime('%%Y-%%m-01')),
+                            ('actual_month', '&lt;=', (context_today() + relativedelta(day=31)).strftime('%%Y-%%m-%%d'))]"/>
                 </group>
             </search>
             </field>
@@ -76,7 +79,8 @@
         <field name="view_mode">tree</field>
         <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
         <field name="view_id" ref="view_account_move_sale_invoice_tree"/>
-        <field name="context">{'search_default_l10n_latam_document_type_id': 1}</field>
+        <field name="context">{'search_default_l10n_latam_document_type_id': 1,
+            'search_default_actual_month': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">¡Sin ventas registradas!</p>
         </field>
@@ -90,9 +94,10 @@
         <field name="view_mode">tree</field>
         <field name="search_view_id" ref="view_search_filter_accounts_sales_suppliers_invoices"/>
         <field name="view_id" ref="view_account_move_supplier_invoice_tree"/>
-        <field name="context">{'search_default_l10n_latam_document_type_id': 1}</field>
+        <field name="context">{'search_default_l10n_latam_document_type_id': 1,
+            'search_default_actual_month': 1}</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Sin datos registrados!</p>
+            <p class="o_view_nocontent_smiling_face">¡Sin compras registrados!</p>
         </field>
     </record>
 
