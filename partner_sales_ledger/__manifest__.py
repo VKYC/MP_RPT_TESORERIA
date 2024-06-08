@@ -1,13 +1,14 @@
 {
-    'name': 'Customer / Supplier Invoices',
+    'name': 'Partner Customer Ledger',
     'version': '15.0.0.0.0',
-    'summary': """ Customer / Supplier Invoices View""",
+    'summary': """ Partner Customer Ledger Views """,
     'author': 'Baruc Álvarez',
     'category': 'Accounting/Accounting',
     'depends': ['account', 'l10n_latam_invoice_document', 'account_move_reconcile'],
     "data": [
-        "views/account_move_views.xml",
-        "views/account_move_menuitem.xml",
+        "security/ir.model.access.csv",
+        "views/account_move_sales_ledger_views.xml",
+        "views/account_move_ledger_menuitem.xml",
     ],
     'application': True,
     'installable': True,
