@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class AccountMove(models.TransientModel):
-    _name = 'account.move.dates.wizard'
+    _name = 'account.move.dates.wizard.supplier'
     _description = 'Asistente de selección de fechas contables'
 
     initial_date = fields.Date(string='Fecha Inicial', default=datetime.today())
