@@ -30,7 +30,7 @@ class AccountMoveSupplierLedger(models.Model):
                 left join l10n_latam_document_type lnldt on am.l10n_latam_document_type_id = lnldt.id
                 left join res_partner rp on am.partner_id = rp.id
                 where facturas_conciliacion_id is not null
-                and am.move_type = 'out_invoice'
+                and am.move_type = 'in_invoice'
                 and lnldt.active = true
                 and sii_document_number != 0
             )
