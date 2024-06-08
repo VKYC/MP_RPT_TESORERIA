@@ -18,7 +18,7 @@
     </record>
 
     <record id="action_open_date_wizard" model="ir.actions.act_window">
-        <field name="name">Libro de ventas</field>
+        <field name="name">Libro de compras</field>
         <field name="res_model">account.move.dates.wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>

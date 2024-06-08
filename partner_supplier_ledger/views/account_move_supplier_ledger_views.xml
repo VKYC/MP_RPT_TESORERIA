@@ -10,6 +10,7 @@
                             context="{'group_by': 'partner_id'}"/>
                     <filter string="Tipo Documento" name="l10n_latam_document_type_id"
                             context="{'group_by': 'l10n_latam_document_type_id', 'active': 'True'}"/>
+                    <filter string="Date" name="date" context="{'group_by': 'date'}"/>
                 </group>
             </search>
             </field>
@@ -19,7 +20,7 @@
         <field name="name">view.account.move.supplier.invoice.tree</field>
         <field name="model">account.move.supplier.ledger</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree create="0">
                 <field name="date"/>
                 <field name="invoice_date"/>
                 <field name="sii_document_number"/>

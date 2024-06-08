@@ -12,8 +12,8 @@ class AccountMove(models.TransientModel):
     def action_confirm(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Libro de ventas'),
-            'res_model': 'account.move.sales.ledger',
+            'name': _('Libro de compras'),
+            'res_model': 'account.move.supplier.ledger',
             'view_mode': 'tree',
             'target': 'main',
             'context': {'search_default_l10n_latam_document_type_id': 1,

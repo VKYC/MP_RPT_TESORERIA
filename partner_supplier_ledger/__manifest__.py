@@ -7,6 +7,7 @@
     'depends': ['account', 'l10n_latam_invoice_document', 'account_move_reconcile'],
     "data": [
         "security/ir.model.access.csv",
+        "wizard/account_move_date_entry_wizard.xml",
         "views/account_move_supplier_ledger_views.xml",
         "views/account_move_ledger_menuitem.xml",
     ],
