@@ -1,7 +1,7 @@
 <odoo>
 
-    <record id="view_set_date_wizard_form" model="ir.ui.view">
-        <field name="name">view.set.date.wizard.form</field>
+    <record id="view_set_date_wizard_form_supplier" model="ir.ui.view">
+        <field name="name">view.set.date.wizard.form.supplier</field>
         <field name="model">account.move.dates.wizard</field>
         <field name="arch" type="xml">
             <form string="Seleccionar fechas a mostrar el libro">
@@ -17,12 +17,12 @@
         </field>
     </record>
 
-    <record id="action_open_date_wizard" model="ir.actions.act_window">
+    <record id="action_open_date_wizard_supplier" model="ir.actions.act_window">
         <field name="name">Libro de compras</field>
         <field name="res_model">account.move.dates.wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="view_set_date_wizard_form"/>
+        <field name="view_id" ref="view_set_date_wizard_form_supplier"/>
         <field name="target">new</field>
     </record>
 
