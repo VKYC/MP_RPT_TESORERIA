@@ -1515,12 +1515,12 @@ class AccountReport(models.AbstractModel):
 
     def _get_reports_buttons(self, options):
         return [
-            {'name': _('PDF'), 'sequence': 1, 'action': 'print_pdf', 'file_export_type': _('PDF')},
-            {'name': _('XLSX'), 'sequence': 2, 'action': 'print_xlsx', 'file_export_type': _('XLSX')},
+            # {'name': _('PDF'), 'sequence': 1, 'action': 'print_pdf', 'file_export_type': _('PDF')},
+            # {'name': _('XLSX'), 'sequence': 2, 'action': 'print_xlsx', 'file_export_type': _('XLSX')},
             {'name': _('Save'), 'sequence': 10, 'action': 'open_report_export_wizard'},
         ]
 
-    def open_report_export_wizard(self, options):
+    def open_report_export_wizard(self, options, extra_parameter):
         """ Creates a new export wizard for this report and returns an act_window
         opening it. A new account_report_generation_options key is also added to
         the context, containing the current options selected on this report
