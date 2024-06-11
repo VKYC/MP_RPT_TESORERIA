@@ -15,7 +15,7 @@ class AccountJournalEntriesDateWizard(models.TransientModel):
             'name': _('Libro de diario'),
             'res_model': 'account.move.line',
             'view_mode': 'tree',
-            'view_id': '',
+            'view_id': self.env.ref('account_journal_entries_report.view_account_journal_entries_tree').id,
             'target': 'main',
             'context': {'search_default_move_name': 1,
                         'group_by': 'date',
