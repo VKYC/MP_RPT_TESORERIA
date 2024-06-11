@@ -6,8 +6,10 @@
     'category': 'Accounting/Accounting',
     'depends': ['account'],
     "data": [
+        "security/ir.model.access.csv",
+        "wizard/account_journal_entries_date_wizard.xml",
         "views/account_journal_entries_report.xml",
-        "views/account_journal_entries_menuitem.xml"
+        "views/account_journal_entries_menuitem.xml",
     ],
     'application': True,
     'installable': True,

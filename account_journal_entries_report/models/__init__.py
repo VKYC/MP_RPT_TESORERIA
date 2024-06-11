@@ -1,2 +1,2 @@
 
-from . import account_jounar_entries
+from . import account_jounal_entries

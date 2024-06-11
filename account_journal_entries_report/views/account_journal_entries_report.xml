@@ -13,8 +13,8 @@
         </field>
     </record>
 
-    <record id="view_account_move_supplier_invoice_tree" model="ir.ui.view">
-        <field name="name">view.account.move.supplier.invoice.tree</field>
+    <record id="view_account_journal_entries_tree" model="ir.ui.view">
+        <field name="name">view.account.journal.entries.tree</field>
         <field name="model">account.move.line</field>
         <field name="arch" type="xml">
             <tree create="0" expand="1">
@@ -33,7 +33,6 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.move.line</field>
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_account_move_supplier_invoice_tree"/>
         <field name="search_view_id" ref="view_search_filter_accounts_journal_ledger"/>
         <field name="context">{'search_default_move_name': 1}</field>
         <field name="help" type="html">
