@@ -17,10 +17,10 @@
         <field name="name">view.account.journal.entries.tree</field>
         <field name="model">account.move.line</field>
         <field name="arch" type="xml">
-            <tree create="0" expand="1">
+            <tree create="0" expand="1" multi_edit="1">
                 <field name="create_date" string="Fecha de creación"/>
                 <field name="name" string="Movimiento"/>
-                <field name="partner_id" string="Partner"/>
+                <field name="partner_name" string="Partner"/>
                 <field name="move_name" string="Factura"/>
                 <field name="debit" string="Débito"/>
                 <field name="credit" string="Por Haber"/>

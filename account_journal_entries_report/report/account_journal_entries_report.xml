@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_journal_entries">
+        <t t-call="web.html_container" t-value="doc.with_context(lang=doc.partner_id.lang)">
+            <t t-foreach="docs" t-as="o" >
+                <div class="header">
+                    <h2>Libro Diario</h2>
+                    <span style="font-weight: bold;">Fecha de Impresion:  </span><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/><br/>
+                    <span style="font-weight: bold;">Usuario:  </span><span t-esc="user.name"/><br/>
+                </div>
+                <div class="page">
+                    <hr/>
+                    <t t-if="o.partner_name">
+                        <span style="font-weight: bold;">Partner:  </span><span><t t-esc="o.partner_name"/></span><br/>
+                    </t>
+                    <t t-else="">
+                        <span style="font-weight: bold;">Partner:  </span><span>No registrado</span><br/>
+                    </t>
+                    <span style="font-weight: bold;">Factura:  </span><span><t t-esc="o.move_name"/></span><br/><br/>
+                    <table>
+                        <thead style="border: 2px solid black; border-collapse: collapse;">
+                            <tr>
+                                <th>Movimiento</th>
+                                <th>Debito</th>
+                                <th>Haber</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.move_line_ids" t-as="line">
+                                <tr>
+                                    <td class="text-center"><t t-esc="line.name"/></td>
+                                    <td class="text-center"><t t-esc="line.debit"/></td>
+                                    <td class="text-center"><t t-esc="line.credit"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <span style="font-weight: bold;">Fecha: </span><span><t t-esc="o.create_date.strftime('%d-%m-%Y')"/></span>
+                    <p style="page-break-before: always;"/>
+                </div>
+                <div class="footer">
+                    PAG: <span class="page"/> DE <span class="topage"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="format_custom" model="report.paperformat">
+        <field name="name">Custom Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">300</field>
+        <field name="page_width">170</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">30</field>
+        <field name="margin_right">30</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_account_journal_entries" model="ir.actions.report">
+        <field name="name">Libro de Diario</field>
+        <field name="model">account.move.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_journal_entries_report.report_journal_entries</field>
+        <field name="report_file">account_journal_entries_report.report_journal_entries</field>
+        <field name="paperformat_id" ref="account_journal_entries_report.format_custom"/>
+        <field name="binding_model_id" ref="account.model_account_move_line"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
