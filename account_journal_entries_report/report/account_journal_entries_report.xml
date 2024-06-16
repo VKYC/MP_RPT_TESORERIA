@@ -3,42 +3,80 @@
 
     <template id="report_journal_entries">
         <t t-call="web.html_container" t-value="doc.with_context(lang=doc.partner_id.lang)">
+            <style>
+                .bordered-table th {
+                    border: 2px solid black;
+                    margin: 20px;
+                    padding: 8px;
+                }
+                .bordered-table-results {
+                    text-align: right;
+                }
+                .table-fixed-size {
+                    width: 1000px;
+                }
+            </style>
+            <t t-set="move_name_value" t-value="False"/>
             <t t-foreach="docs" t-as="o" >
-                <div class="header">
-                    <h2>Libro Diario</h2>
-                    <span style="font-weight: bold;">Fecha de Impresion:  </span><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/><br/>
-                    <span style="font-weight: bold;">Usuario:  </span><span t-esc="user.name"/><br/>
-                </div>
-                <div class="page">
-                    <hr/>
-                    <t t-if="o.partner_name">
-                        <span style="font-weight: bold;">Partner:  </span><span><t t-esc="o.partner_name"/></span><br/>
-                    </t>
-                    <t t-else="">
-                        <span style="font-weight: bold;">Partner:  </span><span>No registrado</span><br/>
-                    </t>
-                    <span style="font-weight: bold;">Factura:  </span><span><t t-esc="o.move_name"/></span><br/><br/>
-                    <table>
-                        <thead style="border: 2px solid black; border-collapse: collapse;">
-                            <tr>
-                                <th>Movimiento</th>
-                                <th>Debito</th>
-                                <th>Haber</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="o.move_line_ids" t-as="line">
+                <t t-set="numeration" t-value="1"/>
+                <t t-set="total_debit" t-value="0"/>
+                <t t-set="total_credit" t-value="0"/>
+                <t t-if="move_name_value != False and o.move_name != move_name_value">
+                    <div class="header">
+                        <h2>Libro Diario</h2>
+                        <span style="font-weight: bold;">Fecha de Impresion:  </span><span t-esc="datetime.datetime.now().strftime('%d-%m-%Y')"/><br/>
+                        <span style="font-weight: bold;">Usuario:  </span><span t-esc="user.name"/><br/>
+                    </div>
+                    <div class="page">
+                        <t t-if="o.partner_name">
+                            <span style="font-weight: bold;">Partner:  </span><span><t t-esc="o.partner_name"/></span><br/>
+                        </t>
+                        <t t-else="">
+                            <span style="font-weight: bold;">Partner:  </span><span>No registrado</span><br/>
+                        </t>
+                        <span style="font-weight: bold;">Factura:  </span><span><t t-esc="o.move_name"/></span><br/><br/>
+                        <table class="bordered-condensed bordered-table table-fixed-size">
+                            <thead>
                                 <tr>
-                                    <td class="text-center"><t t-esc="line.name"/></td>
-                                    <td class="text-center"><t t-esc="line.debit"/></td>
-                                    <td class="text-center"><t t-esc="line.credit"/></td>
+                                    <th>#</th>
+                                    <th>Cuenta</th>
+                                    <th>Movimiento</th>
+                                    <th>Moneda</th>
+                                    <th>Debe</th>
+                                    <th>Haber</th>
                                 </tr>
-                            </t>
-                        </tbody>
-                    </table>
-                    <span style="font-weight: bold;">Fecha: </span><span><t t-esc="o.create_date.strftime('%d-%m-%Y')"/></span>
-                    <p style="page-break-before: always;"/>
-                </div>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.move_line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="numeration"/></td>
+                                        <td><t t-esc="line.account_id.name"/></td>
+                                        <td><t t-esc="line.name"/></td>
+                                        <td><t t-esc="line.currency_id.name"/></td>
+                                        <td class="bordered-table-results"><t t-esc="line.debit"/></td>
+                                        <td class="bordered-table-results"><t t-esc="line.credit"/></td>
+                                        <t t-set="total_debit" t-value="total_debit + line.debit"/>
+                                        <t t-set="total_credit" t-value="total_credit + line.credit"/>
+                                        <t t-set="numeration" t-value="numeration + 1"/>
+                                    </tr>
+                                </t>
+                                <tr/><tr/><tr/><tr/><tr/><tr/>
+                                <tr>
+                                    <td/>
+                                    <td/>
+                                    <td class="bordered-table-results" style="font-weight: bold">Total a la fecha (factura):
+                                        <t t-esc="o.move_id.date.strftime('%d-%m-%Y')"/></td>
+                                    <td/>
+                                    <td class="bordered-table-results"><t t-esc="total_debit"/></td>
+                                    <td class="bordered-table-results"><t t-esc="total_credit"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <p style="page-break-before: always;"/>
+                    </div>
+                </t>
+                <t t-set="move_name_value" t-value="o.move_name"/>
                 <div class="footer">
                     PAG: <span class="page"/> DE <span class="topage"/>
                 </div>
@@ -57,7 +95,7 @@
         <field name="margin_bottom">10</field>
         <field name="margin_left">30</field>
         <field name="margin_right">30</field>
-        <field name="header_line" eval="False"/>
+        <field name="header_line" eval="True"/>
         <field name="header_spacing">5</field>
         <field name="dpi">90</field>
     </record>
