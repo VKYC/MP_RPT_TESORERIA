@@ -1,8 +1,9 @@
 {
     'name': 'Journal Entries Report',
-    'version': '15.0.0.0.0',
+    'version': '15.0.0.0.1',
     'summary': """ Report about the journal entries module """,
-    'author': 'Baruc Álvarez',
+    'author': 'HOLDCO Networks - Baruc Alvarez',
+    'website': 'HOLDCO Networks',
     'category': 'Accounting/Accounting',
     'depends': ['account'],
     "data": [
