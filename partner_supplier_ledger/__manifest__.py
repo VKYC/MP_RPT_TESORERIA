@@ -1,8 +1,9 @@
 {
     'name': 'Partner Supplier Ledger',
-    'version': '15.0.0.0.0',
+    'version': '15.0.0.0.1',
     'summary': """ Partner Supplier Views for the Ledger """,
-    'author': 'Baruc Álvarez',
+    'author': 'HOLDCO Networks - Baruc Alvarez',
+    'website': 'HOLDCO Networks',
     'category': 'Accounting/Accounting',
     'depends': ['account', 'l10n_latam_invoice_document', 'account_move_reconcile'],
     "data": [
