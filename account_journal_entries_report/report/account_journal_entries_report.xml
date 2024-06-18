@@ -17,10 +17,10 @@
                 }
             </style>
             <t t-set="move_name_value" t-value="False"/>
+            <t t-set="total_debit" t-value="0"/>
+            <t t-set="total_credit" t-value="0"/>
             <t t-foreach="docs" t-as="o" >
                 <t t-set="numeration" t-value="1"/>
-                <t t-set="total_debit" t-value="0"/>
-                <t t-set="total_credit" t-value="0"/>
                 <t t-if="move_name_value != False and o.move_name != move_name_value">
                     <div class="header">
                         <h2>Libro Diario</h2>
@@ -67,8 +67,6 @@
                                     <td class="bordered-table-results" style="font-weight: bold">Total a la fecha (factura):
                                         <t t-esc="o.move_id.date.strftime('%d-%m-%Y')"/></td>
                                     <td/>
-                                    <td class="bordered-table-results"><t t-esc="total_debit"/></td>
-                                    <td class="bordered-table-results"><t t-esc="total_credit"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -81,6 +79,22 @@
                     PAG: <span class="page"/> DE <span class="topage"/>
                 </div>
             </t>
+            <table class="bordered-condensed bordered-table table-fixed-size">
+                <thead>
+                    <tr>
+                        <th>TOTAL DEBE:</th>
+                        <th>TOTAL HABER:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bordered-table-results" style="font-size: 25px;">
+                            $<t t-esc="total_debit"/></td>
+                        <td class="bordered-table-results" style="font-size: 25px;">
+                            $<t t-esc="total_credit"/></td>
+                    </tr>
+                </tbody>
+            </table>
         </t>
     </template>
 
@@ -88,9 +102,9 @@
         <field name="name">Custom Format</field>
         <field name="default" eval="True"/>
         <field name="format">custom</field>
-        <field name="page_height">300</field>
-        <field name="page_width">170</field>
-        <field name="orientation">Landscape</field>
+        <field name="page_height">279</field>
+        <field name="page_width">216</field>
+        <field name="orientation">Portrait</field>
         <field name="margin_top">35</field>
         <field name="margin_bottom">10</field>
         <field name="margin_left">30</field>
